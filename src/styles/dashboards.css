@@ -1,0 +1,15 @@
+
+  .container {
+    text-align: center;
+    padding-top: 80px;
+    font-family: Arial;
+  }
+.button{
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #e03e3e;
+    color: white;
+    cursor: pointer;
+  }

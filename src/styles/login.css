@@ -1,0 +1,98 @@
+/* 🌞 Mode light par défaut */
+.page-container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* 🖼 Partie gauche */
+.left-section {
+  width: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-section img {
+  width: 380px;
+  max-width: 80%;
+}
+
+/* 🔵 Partie droite */
+.right-section {
+  width: 50%;
+  background: #0074e1; /* BLEU SOLIDE */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 📦 Form */
+.login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 15px;
+  color: #00375b;
+}
+
+/* Input stylé */
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  outline: none;
+  font-size: 14px;
+  background: #f7f9ff;
+  color:#000000;
+}
+
+/* Bouton */
+.login-box button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: #0074e1;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-box button:hover {
+  background: #0060b3;
+}
+
+/* Lien */
+.forgot {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #444;
+  text-decoration: none;
+}
+
+.forgot:hover {
+  text-decoration: underline;
+}
+
+/* Erreur */
+.error-msg {
+  background: rgba(255, 0, 0, 0.2);
+  color: #c31111;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 13px;
+}
