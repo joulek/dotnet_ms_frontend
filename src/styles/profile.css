@@ -1,0 +1,49 @@
+.profile-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.profile-form label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.btn-save {
+  margin-top: 20px;
+  background: #007bff;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.message-box.success {
+  color: green;
+  background: #d4edda;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.message-box.error {
+  color: red;
+  background: #f8d7da;
+  padding: 8px;
+  border-radius: 8px;
+}

@@ -1,0 +1,96 @@
+.reclamation-container {
+  max-width: 520px;
+  margin: 50px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+  margin-top: 200px;
+}
+
+.reclamation-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0d6efd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.title-icon {
+  font-size: 26px;
+  color: #ff8811;
+}
+
+.reclamation-form input,
+.reclamation-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.reclamation-form input:focus,
+.reclamation-form textarea:focus {
+  border-color: #0d6efd;
+  outline: none;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
+}
+
+.reclamation-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+.btn-submit {
+  background: #0d6efd;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 12px;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background: #084298;
+}
+
+.message-box {
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.message-box.success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+.message-box.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

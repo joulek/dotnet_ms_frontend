@@ -6,6 +6,9 @@ import {
   updateArticle,
 } from "../services/api";
 import Navbar from "../components/Navbar";
+import "../styles/articles.css";
+import { FaBoxOpen, FaTag, FaCalendarAlt, FaShieldAlt, FaAlignLeft } from "react-icons/fa";
+
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState([]);
@@ -15,6 +18,9 @@ export default function ArticlesPage() {
   const [selectedId, setSelectedId] = useState(null);
   const [editingArticle, setEditingArticle] = useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // "success" | "error"
+
 
   const [formData, setFormData] = useState({
     nom: "",
@@ -32,10 +38,10 @@ export default function ArticlesPage() {
   const loadArticles = () => {
     getAllArticles()
       .then((res) => setArticles(res.data))
-      .catch(() => setError("Impossible de charger les articles"));
+      .catch(() => setError("❌ Impossible de charger les articles"));
   };
 
-  /** 🎯 Ouvrir Modal Ajouter */
+  /** 🆕 Ajouter */
   const openAddModal = () => {
     setEditingArticle(null);
     setFormData({
@@ -49,23 +55,22 @@ export default function ArticlesPage() {
     setShowModal(true);
   };
 
-  /** ✏ Ouvrir Modal Modifier */
+  /** ✏ Modifier */
   const openEditModal = (article) => {
     setEditingArticle(article);
     setFormData({ ...article, imageFile: null });
     setShowModal(true);
   };
 
-  /** ❗ Ouvrir Modal Supprimer */
+  /** 🗑 Supprimer */
   const openDeleteModal = (id) => {
     setSelectedId(id);
     setShowDeleteModal(true);
   };
 
-  /** 📥 Ajouter / Modifier */
+  /** 📥 Ajouter / Modifier en backend */
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const data = new FormData();
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null) data.append(key, formData[key]);
@@ -76,119 +81,110 @@ export default function ArticlesPage() {
         ? await updateArticle(editingArticle.id, data)
         : await createArticle(data);
 
-      alert(editingArticle ? "✔ Modifié avec succès !" : "➕ Ajouté avec succès !");
+      setMessage(editingArticle ? "✔ Article modifié avec succès !" : "➕ Article ajouté avec succès !");
+      setMessageType("success");
+
       setShowModal(false);
       loadArticles();
     } catch (error) {
-      alert("❌ Erreur!");
+      setMessage("❌ Erreur lors de l'opération !");
+      setMessageType("error");
     }
   };
+  console.log("🔎 TOKEN ENVOYÉ:", localStorage.getItem("token"));
+  console.log("👤 USER ROLE:", user?.role);
 
-  /** 🗑 Supprimer */
+  /** 🔴 Supprimer en backend */
   const handleDelete = async () => {
     try {
       await deleteArticle(selectedId);
-      alert("🗑 Supprimé avec succès!");
+      setMessage("🗑 Article supprimé avec succès !");
+      setMessageType("success");
+
       setShowDeleteModal(false);
       loadArticles();
     } catch (err) {
-      alert("❌ Erreur");
+      setMessage("❌ Erreur lors de la suppression !");
+      setMessageType("error");
     }
+
   };
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
 
   return (
     <>
       <Navbar />
-      <div style={{ padding: "20px" }}>
-        <h2>📦 Liste des Articles</h2>
+      <div className="articles-container">
+        <h2>Liste des Articles</h2>
+        {message && (
+          <div className={`message-box ${messageType}`}>
+            {message}
+          </div>
+        )}
 
         {user?.role === "Admin" && (
-          <button
-            onClick={openAddModal}
-            style={{
-              padding: "8px 14px",
-              background: "#4caf50",
-              color: "white",
-              borderRadius: "6px",
-              cursor: "pointer",
-              marginBottom: "15px",
-            }}
-          >
-            ➕ Ajouter un Article
+          <button className="add-button" onClick={openAddModal}>
+            Ajouter un Article
           </button>
         )}
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-        <table style={{ width: "100%" }} border="1" cellPadding="8">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nom</th>
-              <th>Référence</th>
-              <th>Description</th>
-              <th>Date Achat</th>
-              <th>Garantie</th>
-              <th>Image</th>
-              {user?.role === "Admin" && <th>🛠 Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {articles.map((a) => (
-              <tr key={a.id}>
-                <td>{a.id}</td>
-                <td>{a.nom}</td>
-                <td>{a.reference}</td>
-                <td>{a.description}</td>
-                <td>{a.dateAchat?.substring(0, 10)}</td>
-                <td>{a.estSousGarantie ? "✔ Oui" : "❌ Non"}</td>
-                <td>
-                  {a.imageUrl ? (
-                    <img
-                      src={`https://localhost:7123${a.imageUrl}`}
-                      alt={a.nom}
-                      width="60"
-                      style={{ borderRadius: "6px" }}
-                    />
-                  ) : (
-                    "❌"
-                  )}
-                </td>
-                {user?.role === "Admin" && (
-                  <td>
-                    <button
-                      onClick={() => openEditModal(a)}
-                      style={{
-                        background: "#ffaa00",
-                        color: "white",
-                        borderRadius: "6px",
-                        marginRight: "5px",
-                      }}
-                    >
-                      ✏ Modifier
-                    </button>
-                    <button
-                      onClick={() => openDeleteModal(a.id)}
-                      style={{
-                        background: "#ff4d4f",
-                        color: "white",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      🗑 Supprimer
-                    </button>
-                  </td>
+        <div className="card-grid">
+          {articles.map((a) => (
+            <div className="article-card" key={a.id}>
+              <div className="card-image">
+                {a.imageUrl ? (
+                  <img src={`https://localhost:7123${a.imageUrl}`} alt={a.nom} />
+                ) : (
+                  <span className="no-image"><FaBoxOpen /></span>
                 )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </div>
+
+              <h3>{a.nom}</h3>
+              <p className="reference">
+                <FaTag className="icon" /> <b>{a.reference}</b>
+              </p>
+
+              <p className="desc">
+                <FaAlignLeft className="icon" /> {a.description}
+              </p>
+
+              <p className="date">
+                <FaCalendarAlt className="icon" /> {a.dateAchat?.substring(0, 10)}
+              </p>
+
+              <p className={a.estSousGarantie ? "garantie oui" : "garantie non"}>
+                <FaShieldAlt className="icon" />
+                {a.estSousGarantie ? " Sous garantie" : " Hors garantie"}
+              </p>
+
+
+              {user?.role === "Admin" && (
+                <div className="card-actions">
+                  <button className="edit-btn" onClick={() => openEditModal(a)}>
+                    Modifier
+                  </button>
+                  <button className="delete-btn" onClick={() => openDeleteModal(a.id)}>
+                    Supprimer
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* 📌 MODAL AJOUT / MODIF */}
+      {/* ✏ MODAL AJOUT / MODIF */}
       {showModal && (
-        <div style={modalOverlay}>
-          <div style={modalBox}>
+        <div className="modalOverlay">
+          <div className="modalBox">
             <h3>{editingArticle ? "✏ Modifier" : "➕ Ajouter"} un Article</h3>
             <form onSubmit={handleSubmit}>
               <input type="text" placeholder="Nom" value={formData.nom} onChange={(e) => setFormData({ ...formData, nom: e.target.value })} required />
@@ -196,15 +192,33 @@ export default function ArticlesPage() {
               <textarea placeholder="Description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
               <input type="date" value={formData.dateAchat} onChange={(e) => setFormData({ ...formData, dateAchat: e.target.value })} required />
               <input type="number" placeholder="Garantie (mois)" value={formData.dureeGarantieMois} onChange={(e) => setFormData({ ...formData, dureeGarantieMois: e.target.value })} required />
-              <input type="file" onChange={(e) => setFormData({ ...formData, imageFile: e.target.files[0] })} />
+              {/* 📂 Zone upload moderne */}
+              <div
+                className="file-dropzone"
+                onClick={() => document.getElementById("file-input").click()}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setFormData({ ...formData, imageFile: e.dataTransfer.files[0] });
+                }}
+              >
+                <p>📁 Cliquez ou glissez-déposez une image</p>
+                <p className="file-hint">PNG, JPG — Max 2 MB</p>
+              </div>
 
-              <div style={{ textAlign: "right", marginTop: "10px" }}>
-                <button type="button" onClick={() => setShowModal(false)} style={{ marginRight: "10px", background: "#555" }}>
-                  ❌ Annuler
-                </button>
-                <button type="submit" style={{ background: "#007bff" }}>
-                  💾 Sauvegarder
-                </button>
+              <input
+                id="file-input"
+                type="file"
+                accept="image/png, image/jpeg"
+                style={{ display: "none" }}
+                onChange={(e) =>
+                  setFormData({ ...formData, imageFile: e.target.files[0] })
+                }
+              />
+
+              <div className="modal-actions">
+                <button type="button" className="btn-cancel" onClick={() => setShowModal(false)}> Annuler</button>
+                <button type="submit" className="btn-save">Sauvegarder</button>
               </div>
             </form>
           </div>
@@ -213,17 +227,13 @@ export default function ArticlesPage() {
 
       {/* 🔴 MODAL SUPPRESSION */}
       {showDeleteModal && (
-        <div style={modalOverlay}>
-          <div style={modalBox}>
+        <div className="modalOverlay">
+          <div className="modalBox">
             <h3>⚠ Confirmation</h3>
             <p>Voulez-vous vraiment supprimer cet article ?</p>
-            <div style={{ textAlign: "right" }}>
-              <button onClick={() => setShowDeleteModal(false)} style={{ marginRight: "10px", background: "#555" }}>
-                Annuler
-              </button>
-              <button onClick={handleDelete} style={{ background: "#ff4d4f" }}>
-                ⚠ Supprimer
-              </button>
+            <div className="modal-actions">
+              <button className="btn-cancel" onClick={() => setShowDeleteModal(false)}>Annuler</button>
+              <button className="btn-delete" onClick={handleDelete}>⚠ Supprimer</button>
             </div>
           </div>
         </div>
@@ -231,27 +241,3 @@ export default function ArticlesPage() {
     </>
   );
 }
-
-/* 🎨 MODAL STYLES */
-const modalOverlay = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0,0,0,0.4)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-const modalBox = {
-  background: "white",
-  padding: "25px",
-  borderRadius: "10px",
-  width: "400px",
-  maxHeight: "90vh",
-  overflowY: "auto",
-  boxShadow: "0 0 10px rgba(0,0,0,0.3)",
-};
-

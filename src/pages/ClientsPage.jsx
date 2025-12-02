@@ -6,6 +6,8 @@ export default function ClientsPage() {
   const [clients, setClients] = useState([]);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
+
+  // Récupération du user connecté
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [formData, setFormData] = useState({
@@ -15,38 +17,36 @@ export default function ClientsPage() {
     telephone: "",
     adresse: "",
   });
-  // 🔍 LOG USER CONNECTÉ
-  console.log("%c👤 USER CONNECTÉ", "color: blue; font-weight: bold;");
-  console.log(user);
+
   useEffect(() => {
-    if (user?.role !== "Admin") return; // sécurité front
+    if (user?.role !== "Admin") return; 
     loadClients();
   }, []);
+
   const loadClients = () => {
-    console.log("%c📡 Requête → GET /gateway/clients", "color: orange");
+    console.log("%c📡 GET /gateway/clients", "color: orange");
 
     getAllClients()
       .then((res) => {
-        console.log("%c📥 Clients chargés avec succès", "color: green");
-        console.log(res.data);
+        console.log("%c📥 Clients chargés !", "color: green");
         setClients(res.data);
       })
       .catch((err) => {
-        console.log("%c🚨 Échec chargement clients", "color: red", err.response);
-        setError("Impossible de charger les clients");
+        console.log("%c🚨 Erreur chargement clients", "color: red", err.response);
+        setError("Impossible de charger les clients.");
       });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await createClient(formData);
-      alert("👤 Client ajouté avec succès !");
+      alert("✔ Client ajouté avec succès !");
       setShowModal(false);
       loadClients();
     } catch (err) {
       alert("❌ Erreur lors de l'ajout !");
+      console.log(err);
     }
   };
 
@@ -57,7 +57,7 @@ export default function ClientsPage() {
   return (
     <>
       <Navbar />
-      <div style={{ padding: "20px" }}>
+      <div style={{ padding: 20 }}>
         <h2>👥 Liste des Clients</h2>
 
         <button
@@ -66,9 +66,9 @@ export default function ClientsPage() {
             padding: "8px 14px",
             background: "#4caf50",
             color: "white",
-            borderRadius: "6px",
+            borderRadius: 6,
             cursor: "pointer",
-            marginBottom: "15px",
+            marginBottom: 15,
           }}
         >
           ➕ Ajouter un Client
@@ -97,7 +97,7 @@ export default function ClientsPage() {
                 <td>{c.email}</td>
                 <td>{c.telephone}</td>
                 <td>{c.adresse}</td>
-                <td>{c.dateCreation?.substring(0, 10)}</td>
+                <td>{String(c.dateCreation).substring(0, 10)}</td>
               </tr>
             ))}
           </tbody>
@@ -109,18 +109,33 @@ export default function ClientsPage() {
         <div style={modalOverlay}>
           <div style={modalBox}>
             <h3>➕ Ajouter un Client</h3>
-            <form onSubmit={handleSubmit}>
-              <input type="text" placeholder="Nom" onChange={(e) => setFormData({ ...formData, nom: e.target.value })} required />
-              <input type="text" placeholder="Prénom" onChange={(e) => setFormData({ ...formData, prenom: e.target.value })} required />
-              <input type="email" placeholder="Email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
-              <input type="text" placeholder="Téléphone" onChange={(e) => setFormData({ ...formData, telephone: e.target.value })} />
-              <input type="text" placeholder="Adresse" onChange={(e) => setFormData({ ...formData, adresse: e.target.value })} />
 
-              <div style={{ textAlign: "right", marginTop: "10px" }}>
-                <button onClick={() => setShowModal(false)} type="button" style={{ marginRight: "10px", background: "#555" }}>
+            <form onSubmit={handleSubmit}>
+              <input type="text" placeholder="Nom" required
+                onChange={(e) => setFormData({ ...formData, nom: e.target.value })}
+              />
+              <input type="text" placeholder="Prénom" required
+                onChange={(e) => setFormData({ ...formData, prenom: e.target.value })}
+              />
+              <input type="email" placeholder="Email" required
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+              <input type="text" placeholder="Téléphone"
+                onChange={(e) => setFormData({ ...formData, telephone: e.target.value })}
+              />
+              <input type="text" placeholder="Adresse"
+                onChange={(e) => setFormData({ ...formData, adresse: e.target.value })}
+              />
+
+              <div style={{ textAlign: "right", marginTop: 10 }}>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  style={{ marginRight: 10, background: "#555", color: "white" }}
+                >
                   ❌ Annuler
                 </button>
-                <button type="submit" style={{ background: "#007bff" }}>
+                <button type="submit" style={{ background: "#007bff", color: "white" }}>
                   💾 Sauvegarder
                 </button>
               </div>
@@ -147,8 +162,8 @@ const modalOverlay = {
 
 const modalBox = {
   background: "white",
-  padding: "25px",
-  borderRadius: "10px",
+  padding: 25,
+  borderRadius: 10,
   width: "380px",
   boxShadow: "0 0 10px rgba(0,0,0,0.3)",
 };

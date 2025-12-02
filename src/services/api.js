@@ -38,13 +38,63 @@ export const updateArticle = (id, data) =>
 export const deleteArticle = (id) => api.delete(`/gateway/articles/${id}`);
 
 
+/* ============================
+   👥 CLIENTS
+================================ */
+
+// 🟣 ADMIN : récupérer tous les clients
+export const getAllClients = () => api.get("/gateway/clients");
+
+// 🟣 ADMIN : créer un client
+export const createClient = (data) =>
+  api.post("/gateway/clients", data);
+// 🟡 CLIENT AUTHENTIFIÉ : récupérer SON profil client
+export const getClientById = (id) =>
+  api.get(`/gateway/clients/${id}`);
+
+// 🟣 ADMIN : modifier un client (si besoin)
+export const updateClient = (id, data) =>
+  api.put(`/gateway/clients/${id}`, data);
+// 🟣 ADMIN : supprimer un client
+export const deleteClient = (id) =>
+  api.delete(`/gateway/clients/${id}`);
+
+
 
 /* ============================
-   👥 CLIENTS (Admin Only)
+   🔧 INTERVENTIONS
 ================================ */
-export const getAllClients = () => api.get("/gateway/clients");
-export const createClient = (data) => api.post("/gateway/clients", data);
+// 🟢 Public
+export const getAllInterventions = () => api.get("/gateway/interventions");
 
+// 🔐 Admin ou Technicien
+export const createIntervention = (data) => api.post("/gateway/interventions", data);
+export const updateIntervention = (id, data) => api.put(`/gateway/interventions/${id}`, data);
+
+
+/* ============================
+   📢 RECLAMATIONS
+============================ */
+export const getAllReclamations = () => api.get("/gateway/reclamations");
+
+export const createReclamation = (data) =>
+  api.post("/gateway/reclamations", data);
+
+export const updateEtatReclamation = (id, nouvelEtat) =>
+  api.put(
+    `/gateway/reclamations/${id}/etat`,
+    JSON.stringify(nouvelEtat),    // envoyer : 2 ou 3
+    { headers: { "Content-Type": "application/json" } }
+  );
+
+
+
+
+
+// 📌 Récupérer le profil de l'utilisateur connecté
+export const getMyProfile = () => api.get("/gateway/profile/me");
+// 📌 Modifier mon profil (Téléphone + Adresse)
+export const updateMyProfile = (data) => api.put("/gateway/profile/me", data);
 
 
 export default api;

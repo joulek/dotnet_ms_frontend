@@ -1,13 +1,14 @@
 import { useState } from "react";
 import api from "../services/api";
 import "../styles/login.css";
-import illustration from "../assets/login.png"; // ton image
+import illustration from "../assets/login.png";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -16,18 +17,17 @@ export default function LoginPage() {
         try {
             const res = await api.post("/gateway/auth/login", { email, password });
 
-            // 🔥 AJOUT LOGS ICI
-            console.log("%c🔑 LOGIN SUCCÈS", "color: green; font-weight: bold;");
-            console.log("📧 Email:", email);
-            console.log("🧑‍💼 Rôle:", res.data.role);
-            console.log("🆔 ID User:", res.data.id);
-            console.log("🪪 Token:", res.data.token);
+            console.log("%c🔑 LOGIN SUCCESS", "color: green; font-weight: bold;", res.data);
 
-            // Sauvegarde
-            localStorage.setItem("token", res.data.token);
+            // 🧼 Nettoyage du token : retire \n, \r, espaces
+            let cleanToken = res.data.token;
+            cleanToken = cleanToken.replace(/(\r\n|\n|\r)/gm, "").trim();
+
+            // Sauvegarde propre
+            localStorage.setItem("token", cleanToken);
             localStorage.setItem("user", JSON.stringify(res.data));
 
-            // Redirection
+            // 🔀 Redirection selon rôle
             if (res.data.role === "Admin") {
                 window.location.replace("/dashboard/admin");
             } else {
@@ -48,7 +48,7 @@ export default function LoginPage() {
                 <img src={illustration} alt="Login Illustration" />
             </div>
 
-            {/* Partie Formulaire */}
+            {/* Partie formulaire */}
             <div className="right-section">
                 <form className="login-box" onSubmit={handleLogin}>
                     <h2>Se connecter</h2>

@@ -1,62 +1,97 @@
-.navbar {
+.bottom-nav {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0074e1;
+  width: 95%;
+  height: 65px;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 12px 30px;
-  background: linear-gradient(135deg, #4c8df5, #3466c2);
-  color: white;
-  font-family: "Arial", sans-serif;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 0 15px;
+  z-index: 1000;
 }
 
-.logo {
-  margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-}
 
-.navbar-center {
+/* 🔹 Icône inactive */
+.nav-item {
   display: flex;
-  gap: 20px;
-}
-
-.nav-link {
+  flex-direction: column;
+  align-items: center;
+  color: #b8b8b8;
   text-decoration: none;
-  color: white;
-  font-size: 16px;
+  font-size: 14px;
   transition: 0.3s;
+
 }
 
-.nav-link:hover {
-  text-decoration: underline;
+.nav-icon {
+  font-size: 22px;
 }
 
-.nav-user {
-  margin-right: 15px;
+/* 🔸 Actif (effet pop-up) */
+.nav-item.active {
+  color: #ff6b35;
+  transform: translateY(-12px);
+}
+
+.nav-item.active .nav-icon {
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0px 3px 10px rgba(255, 107, 53, 0.3);
+}
+
+/* Affiche le texte seulement si actif */
+.nav-text {
   font-size: 15px;
-  color: #e8efff;
-}
-
-.btn-logout {
-  background: white;
-  color: #3466c2;
-  border: none;
-  padding: 7px 13px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
+  margin-top: 5px;
+  opacity: 0;
+  transition: opacity 0.3s;
   font-weight: bold;
 }
 
-.btn-logout:hover {
-  background: #d6e3ff;
+.nav-item.active .nav-text {
+  opacity: 1;
 }
 
-/* 🔁 Responsive */
+/* 📱 Responsive */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
+  .bottom-nav {
+    width: 95%;
+    height: 65px;
+    bottom: 8px;
   }
+}
+/* Bouton logout – même look que les nav-links */
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #b8b8b8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  color: #ff6b35;
+}
+
+.logout-btn .nav-icon {
+  transition: 0.3s;
+}
+
+.logout-btn:hover .nav-icon {
+  transform: scale(1.1);
+}
+
+/* Si tu veux que le logout ait le même effet pop-up que l'actif */
+.logout-btn:active {
+  transform: translateY(-8px);
 }
