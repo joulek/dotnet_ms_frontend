@@ -1,11 +1,20 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
-import { FaHome, FaBoxOpen, FaUsers, FaSignOutAlt, FaTools, FaEnvelopeOpenText, FaClipboardList } from "react-icons/fa";
+import {
+  FaHome,
+  FaBoxOpen,
+  FaUsers,
+  FaSignOutAlt,
+  FaTools,
+  FaEnvelopeOpenText,
+  FaClipboardList,
+} from "react-icons/fa";
 
-export default function Navbar() {
+export default function Sidebar() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+  const userInitial = user?.fullName?.charAt(0)?.toUpperCase() || "?";
 
   const handleLogout = () => {
     localStorage.clear();
@@ -13,96 +22,109 @@ export default function Navbar() {
   };
 
   return (
-    <div
-      className="bottom-nav"
-      style={{
-        justifyContent:
-          user?.role !== "Admin" ? "space-evenly" : "space-around",
-      }}
-    >
-      {/* 🏠 Accueil */}
-      <NavLink
-        to="/dashboard/client"
-        className={({ isActive }) =>
-          isActive ? "nav-item active" : "nav-item"
-        }
-      >
-        <FaHome className="nav-icon" />
-        <span className="nav-text">Accueil</span>
-      </NavLink>
+    <div className="sidebar-container">
 
-      {/* 📦 Articles */}
-      <NavLink
-        to="/articles"
-        className={({ isActive }) =>
-          isActive ? "nav-item active" : "nav-item"
-        }
-      >
-        <FaBoxOpen className="nav-icon" />
-        <span className="nav-text">Articles</span>
-      </NavLink>
+      {/* 🧍 Avatar + lettre */}
+      <div className="sidebar-profile">
+        <div className="profile-initial">{userInitial}</div>
+        <h3 className="profile-name">{user?.fullName}</h3>
+      </div>
 
-      {/* 🛠 Interventions (Admin + Technicien) */}
-      {(user?.role === "Admin" || user?.role === "Technicien") && (
+      <div className="sidebar-menu">
+        {/* 🏠 Accueil */}
         <NavLink
-          to="/interventions"
+          to={user?.role === "Admin" ? "/dashboard/admin" : "/dashboard/client"}
           className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
+            isActive ? "sidebar-item active" : "sidebar-item"
           }
         >
-          <FaTools className="nav-icon" />
-          <span className="nav-text">Interventions</span>
+          <FaHome className="sidebar-icon" />
+          <span>Accueil</span>
         </NavLink>
-      )}
 
-      {/* 👥 Clients (Admin uniquement) */}
-      {user?.role === "Admin" && (
+        {/* 📦 Articles */}
         <NavLink
-          to="/clients"
+          to="/articles"
           className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
+            isActive ? "sidebar-item active" : "sidebar-item"
           }
         >
-          <FaUsers className="nav-icon" />
-          <span className="nav-text">Clients</span>
+          <FaBoxOpen className="sidebar-icon" />
+          <span>Articles</span>
         </NavLink>
-      )}
 
-      {/* 📬 Réclamation (Client uniquement) */}
-      {user?.role === "Client" && (
-        <NavLink
-          to="/reclamation/nouvelle"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          <FaEnvelopeOpenText className="nav-icon" />
-          <span className="nav-text">Réclamation</span>
-        </NavLink>
-      )}
+        {/* 🛠 Interventions (Admin + Technicien) */}
+        {(user?.role === "Admin" || user?.role === "Technicien") && (
+          <NavLink
+            to="/interventions"
+            className={({ isActive }) =>
+              isActive ? "sidebar-item active" : "sidebar-item"
+            }
+          >
+            <FaTools className="sidebar-icon" />
+            <span>Interventions</span>
+          </NavLink>
+        )}
 
-      {/* 📋 Réclamations (Admin + Technicien) */}
-      {["Admin", "Technicien"].includes(user?.role) && (
-        <NavLink
-          to="/admin/reclamations"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          <FaClipboardList className="nav-icon" />
-          <span className="nav-text">Réclamations</span>
-        </NavLink>
-      )}
+        {/* 👥 Clients (Admin) */}
+        {user?.role === "Admin" && (
+          <NavLink
+            to="/clients"
+            className={({ isActive }) =>
+              isActive ? "sidebar-item active" : "sidebar-item"
+            }
+          >
+            <FaUsers className="sidebar-icon" />
+            <span>Clients</span>
+          </NavLink>
+        )}
 
-<NavLink to="/profil" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
-  👤 Mon Profil
-</NavLink>
+        {/* 📬 Réclamation (Client) */}
+        {user?.role === "Client" && (
+          <NavLink
+            to="/reclamation/nouvelle"
+            className={({ isActive }) =>
+              isActive ? "sidebar-item active" : "sidebar-item"
+            }
+          >
+            <FaEnvelopeOpenText className="sidebar-icon" />
+            <span>Réclamer</span>
+          </NavLink>
+        )}
+
+        {/* 📋 Réclamations (Admin + Technicien) */}
+        {["Admin", "Technicien"].includes(user?.role) && (
+          <NavLink
+            to="/admin/reclamations"
+            className={({ isActive }) =>
+              isActive ? "sidebar-item active" : "sidebar-item"
+            }
+          >
+            <FaClipboardList className="sidebar-icon" />
+            <span>Réclamations</span>
+          </NavLink>
+        )}
+
+        {user?.role === "Client" && (
+  <NavLink
+    to="/profile/me"
+    className={({ isActive }) =>
+      isActive ? "sidebar-item active" : "sidebar-item"
+    }
+  >
+    <FaUsers className="sidebar-icon" />
+    <span>Mon Profil</span>
+  </NavLink>
+)}
+
+      </div>
+
 
       {/* 🚪 Déconnexion */}
-      <button className="nav-item logout-btn" onClick={handleLogout}>
-        <FaSignOutAlt className="nav-icon" />
-        <span className="nav-text">Logout</span>
-      </button>
+        <button className="sidebar-item logout-btn" onClick={handleLogout}>
+          <FaSignOutAlt className="sidebar-icon" />
+          <span>Déconnexion</span>
+        </button>
     </div>
   );
 }

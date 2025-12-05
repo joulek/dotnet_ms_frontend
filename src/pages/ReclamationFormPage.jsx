@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createReclamation } from "../services/api";
 import Navbar from "../components/Navbar";
-import { FaEnvelopeOpenText } from "react-icons/fa"; // icône titre
-import "../styles/reclamation.css"; // CSS externe
+import { FaEnvelopeOpenText } from "react-icons/fa";
+import "../styles/reclamation.css";
 
 export default function ReclamationFormPage() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -15,11 +15,17 @@ export default function ReclamationFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createReclamation({ ...formData, clientId: user.id });
+      // ⚠️ IMPORTANT : on renvoie les bons noms de propriété attendus par le backend
+      await createReclamation({
+        Objet: formData.objet,
+        Description: formData.description
+      });
+
       setMessage("📨 Réclamation envoyée avec succès !");
       setMessageType("success");
       setFormData({ objet: "", description: "" });
     } catch (err) {
+      console.error("Erreur :", err);
       setMessage("❌ Erreur lors de l'envoi !");
       setMessageType("error");
     }
@@ -28,37 +34,42 @@ export default function ReclamationFormPage() {
   return (
     <>
       <Navbar />
-      <div className="reclamation-container">
-        <h2 className="reclamation-title">
-          <FaEnvelopeOpenText className="title-icon" /> Nouvelle Réclamation
-        </h2>
 
-        {message && (
-          <p className={`message-box ${messageType}`}>{message}</p>
-        )}
+      <div className="reclamation-page">
+        <div className="reclamation-card">
+          <h2 className="reclamation-title">
+            <FaEnvelopeOpenText className="title-icon" /> Nouvelle Réclamation
+          </h2>
 
-        <form onSubmit={handleSubmit} className="reclamation-form">
-          <input
-            type="text"
-            placeholder="Objet"
-            value={formData.objet}
-            onChange={(e) => setFormData({ ...formData, objet: e.target.value })}
-            required
-          />
+          {message && (
+            <p className={`message-box ${messageType}`}>{message}</p>
+          )}
 
-          <textarea
-            placeholder="Description"
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            required
-          />
+          <form onSubmit={handleSubmit} className="reclamation-form">
+            <input
+              type="text"
+              placeholder="Objet"
+              value={formData.objet}
+              onChange={(e) =>
+                setFormData({ ...formData, objet: e.target.value })
+              }
+              required
+            />
 
-          <button type="submit" className="btn-submit">
-            📬 Envoyer
-          </button>
-        </form>
+            <textarea
+              placeholder="Description"
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              required
+            />
+
+            <button type="submit" className="btn-submit">
+              📬 Envoyer
+            </button>
+          </form>
+        </div>
       </div>
     </>
   );

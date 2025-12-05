@@ -1,89 +1,224 @@
-.reclamation-container {
-  max-width: 520px;
-  margin: 50px auto;
-  padding: 25px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  animation: fadeIn 0.4s ease-in-out;
-  margin-top: 200px;
+.recs-container {
+  padding: 30px;
+  max-width: 1100px;
+  margin: auto;
 }
 
+/* TITRE */
+.recs-container h1 {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* TABLE WRAPPER */
+.table-wrapper {
+  margin-top: 15px;
+  overflow-x: auto;
+}
+
+/* TABLE DESIGN */
+.recs-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.recs-table thead {
+  background: #f1f4fa;
+}
+.recs-table th {
+  padding: 14px 10px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 15px;
+}
+
+/* BODY */
+.recs-table td {
+  padding: 12px 10px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* SEPARATOR */
+.recs-table tbody tr:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* HOVER ROW */
+.recs-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ⭐ BADGE STATUT */
+td[data-etat] {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  min-width: 110px;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Ouverte */
+td[data-etat="Ouverte"] {
+  background: #fff4c2;
+  color: #a07900;
+}
+
+/* EnCours */
+td[data-etat="EnCours"] {
+  background: #d9ecff;
+  color: #0067b8;
+}
+
+/* Resolue */
+td[data-etat="Resolue"] {
+  background: #c4f9d4;
+  color: #0a7432;
+}
+
+/* ⭐ ACTION BUTTON */
+.btn-action {
+  background: #ffb84d;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  color: white;
+  font-weight: bold;
+}
+.btn-action:hover {
+  background: #ff9800;
+  transform: scale(1.05);
+}
+
+/* MESSAGES */
+.message-box {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.message-box.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+.message-box.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+/* Page full background */
+.reclamation-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;
+  min-height: 100vh;
+  background: #f4f6fa; /* pastel agréable */
+}
+
+/* Form container card */
+.reclamation-card {
+  background: white;
+  width: 520px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Title */
 .reclamation-title {
   font-size: 24px;
   font-weight: bold;
-  color: #0d6efd;
+  color: #1f2937;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .title-icon {
   font-size: 26px;
-  color: #ff8811;
+  color: #0d6efd;
 }
 
+/* Inputs */
 .reclamation-form input,
 .reclamation-form textarea {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+  padding: 12px;
+  margin: 10px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 15px;
-  transition: all 0.2s;
+  font-size: 16px;
+  transition: 0.25s ease;
 }
 
 .reclamation-form input:focus,
 .reclamation-form textarea:focus {
   border-color: #0d6efd;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.25);
   outline: none;
-  box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
 }
 
+/* Textarea */
 .reclamation-form textarea {
-  height: 120px;
+  height: 130px;
   resize: none;
 }
 
+/* Submit button */
 .btn-submit {
-  background: #0d6efd;
+  background: #2563eb;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 22px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 17px;
   margin-top: 12px;
-  transition: 0.3s;
+  width: 100%;
+  transition: 0.25s ease;
 }
 
 .btn-submit:hover {
-  background: #084298;
+  background: #1e54d6;
+  transform: scale(1.02);
 }
 
+/* Messages */
 .message-box {
   padding: 10px;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 15px;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .message-box.success {
-  background: #d1fae5;
-  color: #065f46;
-  border: 1px solid #10b981;
+  background: #d4ffd9;
+  color: #1a7f34;
 }
 
 .message-box.error {
-  background: #fee2e2;
-  color: #991b1b;
-  border: 1px solid #ef4444;
+  background: #ffe4e4;
+  color: #b30000;
 }
 
+/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;

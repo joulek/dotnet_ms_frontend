@@ -1,9 +1,3 @@
-/* 🎯 Conteneur */
-.articles-container {
-  padding: 25px;
-  max-width: 1200px;
-  margin: auto;
-}
 
 .error {
   color: red;
@@ -225,4 +219,22 @@
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+.articles-container h1 {
+text-align: center;
+  width: 100%;
+  margin-bottom: 25px;
+  font-size: 40px;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+.modalBox h3 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
 }

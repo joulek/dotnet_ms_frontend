@@ -121,7 +121,7 @@ export default function ArticlesPage() {
     <>
       <Navbar />
       <div className="articles-container">
-        <h2>Liste des Articles</h2>
+        <h1>Liste des Articles</h1>
         {message && (
           <div className={`message-box ${messageType}`}>
             {message}
@@ -130,7 +130,7 @@ export default function ArticlesPage() {
 
         {user?.role === "Admin" && (
           <button className="add-button" onClick={openAddModal}>
-            Ajouter un Article
+            Ajouter Article
           </button>
         )}
 

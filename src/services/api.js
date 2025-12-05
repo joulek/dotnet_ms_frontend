@@ -11,9 +11,15 @@ const api = axios.create({
 // 🔐 Ajout auto du token dans chaque requête
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  console.log("TOKEN USED (localStorage):", token); // 👈 ici
+  
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   return config;
 });
+
 
 /* ============================
    📌 AUTHENTIFICATION
@@ -61,6 +67,18 @@ export const deleteClient = (id) =>
 
 
 
+
+// ⭐ GET profil du client connecté
+export const getMyProfile = () =>
+  api.get("/gateway/profile/me");
+
+// ⭐ UPDATE profil du client connecté
+export const updateMyProfile = (data) =>
+  api.put("/gateway/profile/me", data, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+
 /* ============================
    🔧 INTERVENTIONS
 ================================ */
@@ -91,10 +109,6 @@ export const updateEtatReclamation = (id, nouvelEtat) =>
 
 
 
-// 📌 Récupérer le profil de l'utilisateur connecté
-export const getMyProfile = () => api.get("/gateway/profile/me");
-// 📌 Modifier mon profil (Téléphone + Adresse)
-export const updateMyProfile = (data) => api.put("/gateway/profile/me", data);
 
 
 export default api;

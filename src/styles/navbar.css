@@ -1,97 +1,91 @@
-.bottom-nav {
+.sidebar-container {
   position: fixed;
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #0074e1;
-  width: 95%;
-  height: 65px;
-  border-radius: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 15px;
-  z-index: 1000;
-}
-
-
-/* 🔹 Icône inactive */
-.nav-item {
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: #1f2937;
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #b8b8b8;
-  text-decoration: none;
-  font-size: 14px;
-  transition: 0.3s;
-
 }
 
-.nav-icon {
-  font-size: 22px;
+/* 👤 Profil */
+.sidebar-profile {
+  width: 100%;
+  text-align: center;
+  padding: 25px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 🔸 Actif (effet pop-up) */
-.nav-item.active {
-  color: #ff6b35;
-  transform: translateY(-12px);
-}
-
-.nav-item.active .nav-icon {
-  background: #ffffff;
-  padding: 10px;
+.profile-initial {
+  width: 70px;
+  height: 70px;
+  background: #ff6b35;
+  color: white;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  box-shadow: 0px 3px 10px rgba(255, 107, 53, 0.3);
+  margin: auto;
 }
 
-/* Affiche le texte seulement si actif */
-.nav-text {
+.profile-name {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sidebar-menu {
+  width: 100%;
+  flex: 1;          /* ⬅ force le menu à grandir */
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 25px;
+  color: #cbd5e1;
+  text-decoration: none;
   font-size: 15px;
-  margin-top: 5px;
-  opacity: 0;
-  transition: opacity 0.3s;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.sidebar-item:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.sidebar-icon {
+  margin-right: 15px;
+  font-size: 18px;
+}
+
+.sidebar-item.active {
+  background: rgba(255,255,255,0.15);
+  color: white;
   font-weight: bold;
 }
 
-.nav-item.active .nav-text {
-  opacity: 1;
-}
-
-/* 📱 Responsive */
-@media (max-width: 768px) {
-  .bottom-nav {
-    width: 95%;
-    height: 65px;
-    bottom: 8px;
-  }
-}
-/* Bouton logout – même look que les nav-links */
+/* 🚪 Bouton déconnexion */
 .logout-btn {
   background: none;
   border: none;
+  width: 100%;
+  text-align: left;
+  padding: 12px 25px;
+  color: #cbd5e1;
   cursor: pointer;
-  color: #b8b8b8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 14px;
-  transition: 0.3s;
+  margin-top: auto;  /* ⬅ pousse le bouton TOUT EN BAS */
 }
 
 .logout-btn:hover {
-  color: #ff6b35;
-}
-
-.logout-btn .nav-icon {
-  transition: 0.3s;
-}
-
-.logout-btn:hover .nav-icon {
-  transform: scale(1.1);
-}
-
-/* Si tu veux que le logout ait le même effet pop-up que l'actif */
-.logout-btn:active {
-  transform: translateY(-8px);
+  background: rgba(255,255,255,0.1);
+  color: white;
 }

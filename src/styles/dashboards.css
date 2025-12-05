@@ -1,15 +1,63 @@
+.dashboard-wrapper {
+  padding: 40px;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f6fa;
+  min-height: 100vh;
+}
 
-  .container {
-    text-align: center;
-    padding-top: 80px;
-    font-family: Arial;
-  }
-.button{
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background: #e03e3e;
-    color: white;
-    cursor: pointer;
-  }
+.dashboard-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #4b5563;
+  margin-bottom: 30px;
+}
+
+/* ⭐ GRID CARDS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 14px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.09);
+  transition: 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+.stat-card h3 {
+  font-size: 42px;
+  margin: 0;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.stat-card p {
+  margin-top: 6px;
+  font-size: 16px;
+  color: #374151;
+}
+
+/* 📊 CHART CONTAINER */
+.chart-container {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.09);
+}

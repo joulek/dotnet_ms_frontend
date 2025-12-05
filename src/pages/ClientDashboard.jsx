@@ -7,7 +7,7 @@ export default function ClientDashboard() {
   return (
      <>
           <Navbar />
-    <div className="container">
+      <div className="clients-container">
       <h1>🙋 Bienvenue {user?.fullName} !</h1>
       <p>Vous êtes connecté en tant que <strong>{user?.role}</strong>.</p>
       <p>Voici votre espace client.</p>

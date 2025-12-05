@@ -8,7 +8,7 @@
 
   /* 🎨 Forcer le thème clair */
   color: #213547;
-  background-color: #ffffff;
+  background-color: #F4F6FA;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,8 +18,12 @@
 
 body {
   margin: 0;
-  background: #ffffff !important;  /* 🔥 Toujours blanc */
+  background: #F4F6FA;  /* 🔥 Toujours blanc */
   min-width: 320px;
   min-height: 100vh;
 }
 
+.main-content {
+  margin-left: 240px; /* largeur sidebar */
+  padding: 25px;
+}

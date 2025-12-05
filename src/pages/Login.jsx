@@ -24,8 +24,9 @@ export default function LoginPage() {
             cleanToken = cleanToken.replace(/(\r\n|\n|\r)/gm, "").trim();
 
             // Sauvegarde propre
-            localStorage.setItem("token", cleanToken);
+            localStorage.setItem("token", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data));
+            
 
             // 🔀 Redirection selon rôle
             if (res.data.role === "Admin") {
@@ -76,7 +77,7 @@ export default function LoginPage() {
                     {error && <p className="error-msg">{error}</p>}
 
                     <button type="submit" disabled={loading}>
-                        {loading ? "Connexion..." : "Login"}
+                        {loading ? "Connexion..." : "Se connecter"}
                     </button>
 
                     <a href="/register" className="forgot">Pas de compte ?</a>

@@ -45,9 +45,9 @@ export default function InterventionsPage() {
   };
 
   const openEditModal = (intervention) => {
-      setEditingIntervention(intervention);
-      setFormData(intervention);
-      setShowModal(true);
+    setEditingIntervention(intervention);
+    setFormData(intervention);
+    setShowModal(true);
   };
 
   const handleSubmit = async (e) => {
@@ -86,36 +86,39 @@ export default function InterventionsPage() {
     <>
       <Navbar />
       <div className="interventions-container">
-        <h2>🛠 Liste des interventions</h2>
+
+        <h1> Liste des interventions</h1>
 
         {message && <div className={`message-box ${messageType}`}>{message}</div>}
 
         <button className="add-btn" onClick={openAddModal}>
-          Nouvelle Intervention
+          Ajouter Intervention
         </button>
 
         <div className="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Réclamation</th>
                 <th>Technicien</th>
                 <th>Description</th>
                 <th>Date</th>
                 <th>Statut</th>
-                {(user?.role === "Admin" || user?.role === "Technicien") && <th>Actions</th>}
+                <th>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {interventions.map((i) => (
                 <tr key={i.id}>
-                  <td>{i.id}</td>
                   <td>{i.reclamationId}</td>
                   <td>{i.technicien}</td>
                   <td>{i.description}</td>
                   <td>{i.dateIntervention?.substring(0, 10)}</td>
-                  <td>{i.statut}</td>
+
+                  {/* BADGE STATUT */}
+                  <td data-status={i.statut}>{i.statut}</td>
+
                   <td>
                     <button className="btn-edit" onClick={() => openEditModal(i)}>
                       ✏

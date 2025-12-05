@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllReclamations, updateEtatReclamation } from "../services/api";
+import {
+  getAllReclamations,
+  updateEtatReclamation,
+} from "../services/api";
 import Navbar from "../components/Navbar";
+import "../styles/reclamation.css";
 
 export default function ReclamationsAdminPage() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -19,13 +23,16 @@ export default function ReclamationsAdminPage() {
       .catch(() => setError("❌ Impossible de charger les réclamations"));
   };
 
-  // 🔥 Convertir numéro → texte état
   const getEtatLabel = (etat) => {
     switch (etat) {
-      case 1: return "Ouverte";
-      case 2: return "EnCours";
-      case 3: return "Resolue";
-      default: return "Inconnu";
+      case 1:
+        return "Ouverte";
+      case 2:
+        return "EnCours";
+      case 3:
+        return "Resolue";
+      default:
+        return "Inconnu";
     }
   };
 
@@ -41,64 +48,69 @@ export default function ReclamationsAdminPage() {
   };
 
   if (!["Admin", "Technicien"].includes(user?.role))
-    return <p>⛔ Accès refusé</p>;
+    return <p style={{ textAlign: "center", marginTop: 20 }}>⛔ Accès refusé</p>;
 
   return (
-   <>
-  <Navbar />
+    <>
+      <Navbar />
 
-  <div className="page-content">
-    <div className="container">
+      <div className="recs-container">
+        <h1>Liste des réclamations</h1>
 
-      <h2>📋 Réclamations</h2>
+        {success && <div className="message-box success">{success}</div>}
+        {error && <div className="message-box error">{error}</div>}
 
-      {success && (
-        <p style={{ color: "green", fontWeight: "bold" }}>{success}</p>
-      )}
+        <div className="table-wrapper">
+          <table className="recs-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Objet</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>État</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+            <tbody>
+              {reclamations.map((r) => (
+                <tr key={r.id}>
+                  <td>{r.client?.nom} {r.client?.prenom}</td>
+                  <td>{r.objet}</td>
+                  <td>{r.description}</td>
+                  <td>{r.dateReclamation?.substring(0, 10)}</td>
 
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr>
-            <th>Client</th>
-            <th>Objet</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>État</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+                  {/* ⭐ BADGE STATUT */}
+                  <td data-etat={getEtatLabel(r.etat)}>
+                    {getEtatLabel(r.etat)}
+                  </td>
 
-        <tbody>
-          {reclamations.map((r) => (
-            <tr key={r.id}>
-              <td>{r.client?.nom} {r.client?.prenom}</td>
-              <td>{r.objet}</td>
-              <td>{r.description}</td>
-              <td>{r.dateReclamation?.substring(0, 10)}</td>
-              <td>{getEtatLabel(r.etat)}</td>
-
-              <td>
-                {getEtatLabel(r.etat) !== "Resolue" && (
-                  <button
-                    onClick={() =>
-                      changeEtat(
-                        r.id,
-                        getEtatLabel(r.etat) === "Ouverte" ? 2 : 3
-                      )
-                    }
-                  >
-                    👉 Passer à {getEtatLabel(r.etat) === "Ouverte" ? "EnCours" : "Resolue"}
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</>
+                  {/* ⭐ ACTION BUTTON */}
+                  <td>
+                    {getEtatLabel(r.etat) !== "Resolue" && (
+                      <button
+                        className="btn-action"
+                        onClick={() =>
+                          changeEtat(
+                            r.id,
+                            getEtatLabel(r.etat) === "Ouverte" ? 2 : 3
+                          )
+                        }
+                      >
+                        Passer à{" "}
+                        {getEtatLabel(r.etat) === "Ouverte"
+                          ? "EnCours"
+                          : "Resolue"}
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
   );
 }

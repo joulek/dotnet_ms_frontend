@@ -1,4 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/Layout";  // ⬅️ IMPORTANT
+
 import LoginPage from "./pages/Login"; 
 import RegisterPage from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -11,47 +13,86 @@ import ReclamationFormPage from "./pages/ReclamationFormPage";
 import ReclamationsAdminPage from "./pages/ReclamationsAdminPage";
 import ProfilePage from "./pages/ProfilePage";
 
+
+
 function App() {
   return (
     <Routes>
-      {/* Redirection par défaut vers login */}
+      {/* pages sans sidebar */}
       <Route path="/" element={<Navigate to="/login" />} />
-      
-      {/* Page Login */}
       <Route path="/login" element={<LoginPage />} />
-
       <Route path="/register" element={<RegisterPage />} />
-<Route
+
+      {/* pages AVEC sidebar */}
+      <Route
         path="/dashboard/admin"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Layout>
+              <Dashboard />
+            </Layout>
           </ProtectedRoute>
         }
       />
-   
-   <Route
+
+      <Route
         path="/dashboard/client"
         element={
           <ProtectedRoute>
-            <ClientDashboard />
+            <Layout>
+              <ClientDashboard />
+            </Layout>
           </ProtectedRoute>
         }
       />
-{/* 🔓 Public - articles */}
-        <Route path="/articles" element={<ArticlesPage />} />
 
-        <Route path="/interventions" element={<InterventionsPage />} />
-        <Route path="/reclamation/nouvelle" element={<ReclamationFormPage />} />
-<Route path="/admin/reclamations" element={<ReclamationsAdminPage />} />
-<Route path="/profil" element={<ProfilePage />} />
+      <Route
+        path="/articles"
+        element={
+          <Layout>
+            <ArticlesPage />
+          </Layout>
+        }
+      />
 
+      <Route
+        path="/interventions"
+        element={
+          <Layout>
+            <InterventionsPage />
+          </Layout>
+        }
+      />
 
-<Route path="/clients" element={
-  <ProtectedRoute>
-    <ClientsPage />
-  </ProtectedRoute>
-} />
+      <Route
+        path="/reclamation/nouvelle"
+        element={
+          <Layout>
+            <ReclamationFormPage />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/admin/reclamations"
+        element={
+          <Layout>
+            <ReclamationsAdminPage />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/clients"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ClientsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+<Route path="/profile/me" element={<ProfilePage />} />
 
     </Routes>
   );

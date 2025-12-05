@@ -1,9 +1,25 @@
 .interventions-container {
-  padding: 20px;
+  padding: 30px;
   max-width: 1100px;
   margin: auto;
 }
 
+/* Titre moderne */
+.interventions-container h1 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 25px;
+  font-size: 40px;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Bouton ajout */
 .add-btn {
   background: #4caf50;
   color: white;
@@ -18,21 +34,96 @@
   background: #43a047;
 }
 
+/* TABLE WRAPPER */
 .table-wrapper {
-  margin-top: 20px;
+  margin-top: 25px;
+  overflow-x: auto;
 }
 
+/* TABLE DESIGN */
 table {
   width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-th, td {
-  padding: 12px;
+/* HEADER */
+thead {
+  background: #f1f4fa;
+}
+
+th {
+  padding: 14px 10px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 15px;
+}
+
+td {
+  padding: 12px 10px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* Lignes séparées */
+tbody tr:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Hover ligne */
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* BADGES STATUT */
+td[data-status] {
+  padding: 6px 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  display: inline-block;
+  min-width: 110px;
   text-align: center;
 }
 
+/* En attente */
+td[data-status="en attente"] {
+  background: #fff4c2;
+  color: #a07900;
+}
+
+/* En cours */
+td[data-status="En cours"] {
+  background: #d9ecff;
+  color: #0067b8;
+}
+
+/* Terminée */
+td[data-status="Terminée"] {
+  background: #c4f9d4;
+  color: #0a7432;
+}
+
+/* EDIT BUTTON */
+.btn-edit {
+  background: #ffb84d;
+  border: none; 
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  color: white;
+  font-weight: bold;
+}
+.btn-edit:hover {
+  background: #ff9800;
+  transform: scale(1.05);
+}
+
+/* MESSAGE SUCCESS & ERROR */
 .message-box {
   padding: 10px;
   border-radius: 8px;
@@ -42,20 +133,53 @@ th, td {
 .message-box.success { background: #d4ffdf; color: #15843d; }
 .message-box.error { background: #ffd4d4; color: #d62525; }
 
+/* MODAL */
 .modalOverlay {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0,0,0,0.4);
   display: flex; justify-content: center; align-items: center;
 }
+
 .modalBox {
   background: white; padding: 25px; border-radius: 12px;
   width: 420px; box-shadow: 0 6px 18px rgba(0,0,0,0.2);
 }
 
-.btn-edit {
-  background: #ffa726;
-  border: none; padding: 6px 10px;
-  border-radius: 6px; cursor: pointer;
+.modalBox input,
+.modalBox textarea,
+.modalBox select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 }
-.btn-edit:hover { background: #ff9800; }
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btn-save {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #777;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save:hover { transform: scale(1.03); }
+.btn-cancel:hover { background: #555; }
