@@ -1,0 +1,290 @@
+.page-content {
+  margin-left: 260px;
+}
+
+.shop-title {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 25px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* === CONTAINER === */
+.shop-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.shop-left {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.shop-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.shop-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.shop-product {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.shop-product-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  background-color: #eee;
+}
+
+.shop-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shop-qty button {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #bbb;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.shop-price {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+/* === RIGHT CARD === */
+.shop-right {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 🔥 BLOC COUPON CORRIGÉ */
+.shop-coupon-box {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+}
+
+.shop-coupon-inputs {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.shop-coupon-inputs input {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.shop-coupon-inputs button {
+  padding: 8px 15px;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.shop-summary-card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.sum-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.shop-back-btn {
+  width: 20%;
+  margin-top: 12px;
+  background: #007bff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.sum-btn {
+  width: 100%;
+  margin-top: 12px;
+  background: #007bff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.sum-payment img {
+  height: 22px;
+  margin-top: 10px;
+  margin-right: 6px;
+}
+
+.shop-delivery {
+  margin-top: 5px;
+  background: #c8f7c5;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* ==================== MODAL ==================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(3px);
+}
+
+.modal-box {
+  background: white;
+  padding: 25px;
+  width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-box h2 {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-form input {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  width: 100%;
+}
+
+/* 🔥 RADIO ALIGNÉ & PROPRE */
+.modal-payments {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-payments label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.modal-payments input[type="radio"] {
+  accent-color: #007bff;
+  width: 16px;
+  height: 16px;
+}
+
+.modal-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-confirm-btn {
+  flex: 1;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-cancel-btn {
+  flex: 1;
+  background: white;
+  border: 1px solid #777;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.cart-success {
+  background: #d1f7d6;
+  color: #155724;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 10px 0 15px 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid #9ee6a7;
+}

@@ -238,3 +238,24 @@ text-align: center;
   width: 100%;
   margin-bottom: 20px;
 }
+
+.cart-btn {
+  background: #15c415;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.cart-btn:hover {
+  background: #0f9f0f;
+}
+.cart-btn.disabled {
+  opacity: 0.6;
+  background-color: #999 !important;
+  cursor: not-allowed;
+}

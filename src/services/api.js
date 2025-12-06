@@ -106,9 +106,48 @@ export const updateEtatReclamation = (id, nouvelEtat) =>
   );
 
 
+/* ============================
+   🛒 PANIER (OrdersAPI)
+================================ */
+
+// ⭐ Récupérer le panier du client connecté
+export const getMyCart = () =>
+  api.get("/gateway/cart/me");
+
+// ⭐ Ajouter un article au panier
+export const addToCart = (articleId, quantity, unitPrice) =>
+  api.post(
+    "/gateway/cart/me/add",
+    {
+      articleId,
+      quantity,
+      unitPrice,
+    },
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
 
 
+/* ============================
+   🧾 COMMANDES (OrdersAPI)
+================================ */
+
+// ⭐ Récupérer toutes les commandes du client connecté
+export const getMyOrders = () =>
+  api.get("/gateway/orders/me");
+
+// ⭐ Créer une commande à partir du panier
+export const createOrderFromCart = () =>
+  api.post("/gateway/orders/create-from-cart");
 
 
+export function increaseCartItem(articleId) {
+  return api.put(`/gateway/cart/inc/${articleId}`);
+}
+
+export function decreaseCartItem(articleId) {
+  return api.put(`/gateway/cart/dec/${articleId}`);
+}
 
 export default api;

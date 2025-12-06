@@ -1,17 +1,19 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";  // ⬅️ IMPORTANT
 
-import LoginPage from "./pages/Login"; 
+import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ClientDashboard from "./pages/ClientDashboard";  
+import ClientDashboard from "./pages/ClientDashboard";
 import ArticlesPage from "./pages/ArticlesPage";
 import ClientsPage from "./pages/ClientsPage";
 import InterventionsPage from "./pages/InterventionsPage";
 import ReclamationFormPage from "./pages/ReclamationFormPage";
 import ReclamationsAdminPage from "./pages/ReclamationsAdminPage";
 import ProfilePage from "./pages/ProfilePage";
+import CartPage from "./pages/CartPage";
+import OrdersPage from "./pages/OrdersPage";
 
 
 
@@ -92,8 +94,24 @@ function App() {
           </ProtectedRoute>
         }
       />
-<Route path="/profile/me" element={<ProfilePage />} />
+      <Route path="/profile/me" element={<ProfilePage />} />
+      <Route
+        path="/client/cart"
+        element={
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        }
+      />
 
+      <Route
+        path="/client/orders"
+        element={
+          <ProtectedRoute>
+            <OrdersPage />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

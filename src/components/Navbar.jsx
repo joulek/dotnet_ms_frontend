@@ -106,25 +106,51 @@ export default function Sidebar() {
         )}
 
         {user?.role === "Client" && (
-  <NavLink
-    to="/profile/me"
-    className={({ isActive }) =>
-      isActive ? "sidebar-item active" : "sidebar-item"
-    }
-  >
-    <FaUsers className="sidebar-icon" />
-    <span>Mon Profil</span>
-  </NavLink>
-)}
+          <NavLink
+            to="/profile/me"
+            className={({ isActive }) =>
+              isActive ? "sidebar-item active" : "sidebar-item"
+            }
+          >
+            <FaUsers className="sidebar-icon" />
+            <span>Mon Profil</span>
+          </NavLink>
+        )}
+
+        {/* 🛒 Panier (Client uniquement) */}
+        {user?.role === "Client" && (
+          <NavLink
+            to="/client/cart"
+            className={({ isActive }) =>
+              isActive ? "sidebar-item active" : "sidebar-item"
+            }
+          >
+            <FaBoxOpen className="sidebar-icon" />
+            <span>Mon Panier</span>
+          </NavLink>
+        )}
+
+        {/* 📦 Commandes (Client uniquement) */}
+        {user?.role === "Client" && (
+          <NavLink
+            to="/client/orders"
+            className={({ isActive }) =>
+              isActive ? "sidebar-item active" : "sidebar-item"
+            }
+          >
+            <FaClipboardList className="sidebar-icon" />
+            <span>Mes Commandes</span>
+          </NavLink>
+        )}
 
       </div>
 
 
       {/* 🚪 Déconnexion */}
-        <button className="sidebar-item logout-btn" onClick={handleLogout}>
-          <FaSignOutAlt className="sidebar-icon" />
-          <span>Déconnexion</span>
-        </button>
+      <button className="sidebar-item logout-btn" onClick={handleLogout}>
+        <FaSignOutAlt className="sidebar-icon" />
+        <span>Déconnexion</span>
+      </button>
     </div>
   );
 }
