@@ -1,136 +1,73 @@
-import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from "react";
 import { getMyProfile, updateMyProfile } from "../services/api";
+import Navbar from "../components/Navbar";
 import "../styles/profile.css";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
-  const [formData, setFormData] = useState({
-    telephone: "",
-    adresse: ""
-  });
-
-  const [modalOpen, setModalOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   useEffect(() => {
-    loadProfile();
-  }, []);
-
-  const loadProfile = async () => {
-    try {
-      const res = await getMyProfile();
-      setProfile(res.data);
-
-      setFormData({
-        telephone: res.data.telephone || "",
-        adresse: res.data.adresse || ""
-      });
-    } catch (err) {
-      console.error(err);
-      setMessage("❌ Impossible de charger le profil");
+    async function fetchProfile() {
+      try {
+        const res = await getMyProfile();
+        setProfile(res.data);
+      } catch (error) {
+        setMessage("❌ Impossible de récupérer votre profil");
+        setMessageType("error");
+      }
     }
-  };
+    fetchProfile();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await updateMyProfile(formData);
-      setMessage("✔ Profil mis à jour !");
-      setModalOpen(false);
-      loadProfile();
-    } catch (err) {
-      console.error(err);
-      setMessage("❌ Erreur lors de la mise à jour");
+      await updateMyProfile({
+        telephone: profile.telephone,
+        adresse: profile.adresse,
+      });
+      setMessage("✔️ Profil mis à jour !");
+      setMessageType("success");
+    } catch (error) {
+      setMessage("⚠ Erreur lors de la mise à jour !");
+      setMessageType("error");
     }
   };
 
-  if (!profile) return <p className="loading-text">Chargement...</p>;
-
-  const initial = profile.nom?.charAt(0)?.toUpperCase() ?? "U";
+  if (!profile) return <p>⏳ Chargement...</p>;
 
   return (
     <>
       <Navbar />
-
       <div className="profile-container">
-        <h1 className="profile-title">Mon Profil</h1>
+        <h2>👤 Mon Profil</h2>
 
-        {message && <p className="profile-message">{message}</p>}
+        {message && <p className={`message-box ${messageType}`}>{message}</p>}
 
-        <div className="profile-card">
+        <form onSubmit={handleSubmit} className="profile-form">
+          <p><strong>Nom :</strong> {profile.nom} {profile.prenom}</p>
+          <p><strong>Email :</strong> {profile.email}</p>
+          <p><strong>Date création :</strong> {profile.dateCreation?.substring(0,10)}</p>
 
-          {/* --- AVATAR + NOM --- */}
-          <div className="profile-header">
-            <div className="avatar">{initial}</div>
+          <label>Téléphone :</label>
+          <input
+            type="text"
+            value={profile.telephone || ""}
+            onChange={(e) => setProfile({ ...profile, telephone: e.target.value })}
+          />
 
-            <div>
-              <h2 className="profile-name">{profile.nom} {profile.prenom}</h2>
-              <p className="profile-email">{profile.email}</p>
-            </div>
-          </div>
+          <label>Adresse :</label>
+          <input
+            type="text"
+            value={profile.adresse || ""}
+            onChange={(e) => setProfile({ ...profile, adresse: e.target.value })}
+          />
 
-          {/* --- INFOS ALIGNÉES --- */}
-          <div className="profile-grid">
-            <div className="profile-block">
-              <span className="block-label">Téléphone</span>
-              <span className="block-value">{profile.telephone || "-"}</span>
-            </div>
-
-            <div className="profile-block">
-              <span className="block-label">Adresse</span>
-              <span className="block-value">{profile.adresse || "-"}</span>
-            </div>
-
-            <div className="profile-block">
-              <span className="block-label">Email</span>
-              <span className="block-value">{profile.email}</span>
-            </div>
-
-            <div className="profile-block">
-              <span className="block-label">Créé le</span>
-              <span className="block-value">
-                {String(profile.dateCreation).substring(0, 10)}
-              </span>
-            </div>
-          </div>
-
-          <button className="btn-edit" onClick={() => setModalOpen(true)}>
-            Modifier mon profil
-          </button>
-        </div>
+          <button type="submit" className="btn-save">💾 Sauvegarder</button>
+        </form>
       </div>
-
-      {/* --- MODAL --- */}
-      {modalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Modifier mes informations</h2>
-
-            <form onSubmit={handleSubmit}>
-              <label>Téléphone</label>
-              <input
-                type="text"
-                value={formData.telephone}
-                onChange={(e) => setFormData({ ...formData, telephone: e.target.value })}
-              />
-
-              <label>Adresse</label>
-              <input
-                type="text"
-                value={formData.adresse}
-                onChange={(e) => setFormData({ ...formData, adresse: e.target.value })}
-              />
-
-              <div className="modal-actions">
-                <button type="submit" className="btn-save">Enregistrer</button>
-                <button type="button" className="btn-cancel" onClick={() => setModalOpen(false)}>Annuler</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </>
   );
 }
