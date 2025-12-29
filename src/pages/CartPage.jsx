@@ -100,42 +100,65 @@ export default function CartPage() {
     }
   }
 
-  // ======================= CHECKOUT =======================
-  async function handleCheckout() {
-    setCheckout(true);
+async function handleCheckout() {
+  setCheckout(true);
 
+  setTimeout(async () => {
+    // ======================
+    // 1️⃣ Créer commande FAKE (localStorage)
+    // ======================
+    const fakeOrder = {
+      id: Date.now(),
+      orderDate: new Date().toISOString(),
+      totalAmount: cart.items.reduce(
+        (acc, i) => acc + i.unitPrice * i.quantity,
+        0
+      ),
+      items: cart.items
+    };
+
+    const existingOrders =
+      JSON.parse(localStorage.getItem("orders")) || [];
+
+    localStorage.setItem(
+      "orders",
+      JSON.stringify([fakeOrder, ...existingOrders])
+    );
+
+    // ======================
+    // 2️⃣ VIDER PANIER BACKEND
+    // ======================
     try {
-      await axios.post(
-        "https://localhost:7053/gateway/orders/create-from-cart",
-        {
-          fullname: customerInfo.fullname,
-          address: customerInfo.address,
-          phone: customerInfo.phone,
-          paymentMethod: paymentMethod,
-        },
+      await axios.delete(
+        "https://localhost:7053/gateway/cart/clear",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      setSuccessMessage("🎉 Votre commande a été validée avec succès !");
-
-
-      // ⛔ vider panier
-      reloadCart();
-
-      // ⭐⭐ RECHARGER PAGE ARTICLES ⭐⭐
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-
     } catch (err) {
-      alert("Erreur lors du paiement");
-    } finally {
-      setCheckout(false);
+      console.error("Erreur clear cart backend", err);
     }
-  }
+
+    // ======================
+    // 3️⃣ VIDER PANIER FRONT
+    // ======================
+    setCart({
+      ...cart,
+      items: []
+    });
+
+    // ======================
+    // 4️⃣ UI
+    // ======================
+    setSuccessMessage("🎉 Paiement effectué avec succès !");
+    setShowModal(false);
+    setCheckout(false);
+
+  }, 1000);
+}
+
 
 
   // ======================= INIT =======================

@@ -76,7 +76,7 @@ export default function ReclamationsAdminPage() {
             <tbody>
               {reclamations.map((r) => (
                 <tr key={r.id}>
-                  <td>{r.client?.nom} {r.client?.prenom}</td>
+                  <td>{r.clientName}</td>
                   <td>{r.objet}</td>
                   <td>{r.description}</td>
                   <td>{r.dateReclamation?.substring(0, 10)}</td>

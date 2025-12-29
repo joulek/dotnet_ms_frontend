@@ -7,7 +7,6 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ClientDashboard from "./pages/ClientDashboard";
 import ArticlesPage from "./pages/ArticlesPage";
-import ClientsPage from "./pages/ClientsPage";
 import InterventionsPage from "./pages/InterventionsPage";
 import ReclamationFormPage from "./pages/ReclamationFormPage";
 import ReclamationsAdminPage from "./pages/ReclamationsAdminPage";
@@ -84,16 +83,6 @@ function App() {
         }
       />
 
-      <Route
-        path="/clients"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <ClientsPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
       <Route path="/profile/me" element={<ProfilePage />} />
       <Route
         path="/client/cart"

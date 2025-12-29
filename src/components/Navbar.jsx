@@ -66,18 +66,7 @@ export default function Sidebar() {
           </NavLink>
         )}
 
-        {/* 👥 Clients (Admin) */}
-        {user?.role === "Admin" && (
-          <NavLink
-            to="/clients"
-            className={({ isActive }) =>
-              isActive ? "sidebar-item active" : "sidebar-item"
-            }
-          >
-            <FaUsers className="sidebar-icon" />
-            <span>Clients</span>
-          </NavLink>
-        )}
+ 
 
         {/* 📬 Réclamation (Client) */}
         {user?.role === "Client" && (

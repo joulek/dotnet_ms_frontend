@@ -10,14 +10,12 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
 
   /** Charger les commandes du client */
-  async function loadOrders() {
-    try {
-      const res = await getMyOrders();
-      setOrders(res.data || []);
-    } catch (err) {
-      console.error("Erreur commandes:", err);
-    }
-  }
+async function loadOrders() {
+  const storedOrders =
+    JSON.parse(localStorage.getItem("orders")) || [];
+  setOrders(storedOrders);
+}
+
 
   /** Charger tous les articles une seule fois */
   async function loadArticles() {
