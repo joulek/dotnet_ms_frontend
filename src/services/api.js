@@ -112,21 +112,16 @@ export const updateEtatReclamation = (id, nouvelEtat) =>
 
 // ⭐ Récupérer le panier du client connecté
 export const getMyCart = () =>
-  api.get("/gateway/cart/me");
+  api.get("/gateway/cart");
 
-// ⭐ Ajouter un article au panier
-export const addToCart = (articleId, quantity, unitPrice) =>
-  api.post(
-    "/gateway/cart/me/add",
-    {
-      articleId,
-      quantity,
-      unitPrice,
-    },
-    {
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+export const addToCart = (articleId, quantity, unitPrice, articleName) =>
+  api.post("/gateway/cart/items", {
+    articleId,
+    quantity,
+    unitPrice,
+    articleName
+  });
+
 
 
 /* ============================
